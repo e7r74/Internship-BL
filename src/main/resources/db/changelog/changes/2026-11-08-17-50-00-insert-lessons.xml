@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="insert-lessons" author="yerkhan">
+<!--        java course-->
+        <insert tableName="t_lesson">
+            <column name="name" value="Lecture for if-else conditions"/>
+            <column name="description" value="Theoretical foundation of logical branching."/>
+            <column name="content" value="In Java, the if statement is used to evaluate a condition. It checks a boolean condition: true or false."/>
+            <column name="order" valueNumeric="1"/>
+            <column name="chapter_id" valueNumeric="1"/>
+            <column name="created_time" valueDate="2026-11-08 19:00:00"/>
+            <column name="update_time" valueDate="2026-11-08 19:00:00"/>
+        </insert>
+        <insert tableName="t_lesson">
+            <column name="name" value="Practice for if-else conditions"/>
+            <column name="description" value="Practical exercises for conditional operators."/>
+            <column name="content" value="Task 1: Write a Java program to check whether a given number is positive or negative."/>
+            <column name="order" valueNumeric="2"/>
+            <column name="chapter_id" valueNumeric="1"/>
+            <column name="created_time" valueDate="2026-11-08 19:00:00"/>
+            <column name="update_time" valueDate="2026-11-08 19:00:00"/>
+        </insert>
+<!--        GoLang course-->
+        <insert tableName="t_lesson">
+            <column name="name" value="Introduction to Goroutines"/>
+            <column name="description" value="Understanding lightweight threads in Go."/>
+            <column name="content" value="Goroutines are functions that run concurrently with other functions. A goroutine is lightweight compared to a thread."/>
+            <column name="order" valueNumeric="1"/>
+            <column name="chapter_id" valueNumeric="2"/>
+            <column name="created_time" valueDate="2026-11-08 19:00:00"/>
+            <column name="update_time" valueDate="2026-11-08 19:00:00"/>
+        </insert>
+<!--        python course-->
+        <insert tableName="t_lesson">
+            <column name="name" value="Classes and Objects in Python"/>
+            <column name="description" value="Blueprint of object-oriented programming."/>
+            <column name="content" value="Python is a multi-paradigm programming language. Object-oriented programming (OOP) aims to implement real-world entities."/>
+            <column name="order" valueNumeric="1"/>
+            <column name="chapter_id" valueNumeric="3"/>
+            <column name="created_time" valueDate="2026-11-08 19:00:00"/>
+            <column name="update_time" valueDate="2026-11-08 19:00:00"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

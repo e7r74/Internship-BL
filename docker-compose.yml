@@ -11,7 +11,7 @@ services:
       SPRING_JPA_HIBERNATE_DDL_AUTO: validate
       SPRING_JPA_SHOW_SQL: "true"
     ports:
-      - "8080:8080"
+      - "8000:8000"
 
   postgres-db:
     image: postgres:15-alpine

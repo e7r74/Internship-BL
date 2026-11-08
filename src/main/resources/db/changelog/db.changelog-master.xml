@@ -4,6 +4,9 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                             http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
-    
+    <include file="db/changelog/changes/2026-11-08-17-20-00-create-tables.xml"/>
+    <include file="db/changelog/changes/2026-11-08-17-40-00-insert-courses.xml"/>
+    <include file="db/changelog/changes/2026-11-08-17-45-00-insert-chapters.xml"/>
+    <include file="db/changelog/changes/2026-11-08-17-50-00-insert-lessons.xml"/>
 
 </databaseChangeLog>

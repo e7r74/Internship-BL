@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="insert-chapter" author="yerkhan">
+        <insert tableName="t_chapter">
+            <column name="name" value="If-else conditions"/>
+            <column name="description" value="Learn the basics of branching and decision making in Java."/>
+            <column name="order" valueNumeric="1"/>
+            <column name="course_id" valueNumeric="1"/>
+            <column name="created_time" valueDate="2026-11-10 19:00:00"/>
+            <column name="update_time" valueDate="2026-11-10 19:00:00"/>
+        </insert>
+        <insert tableName="t_chapter">
+            <column name="name" value="Goroutines and Concurrency"/>
+            <column name="description" value="Mastering asynchronous programming and concurrency models in Go."/>
+            <column name="order" valueNumeric="1"/>
+            <column name="course_id" valueNumeric="2"/>
+            <column name="created_time" valueDate="2026-11-08 19:00:00"/>
+            <column name="update_time" valueDate="2026-11-08 19:00:00"/>
+        </insert>
+        <insert tableName="t_chapter">
+            <column name="name" value="Object-Oriented Programming in Python"/>
+            <column name="description" value="Understanding classes, objects, inheritance, and polymorphism."/>
+            <column name="order" valueNumeric="1"/>
+            <column name="course_id" valueNumeric="3"/>
+            <column name="created_time" valueDate="2026-11-08 19:00:00"/>
+            <column name="update_time" valueDate="2026-11-08 19:00:00"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

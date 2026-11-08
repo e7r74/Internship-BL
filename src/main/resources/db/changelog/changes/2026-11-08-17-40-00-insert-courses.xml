@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+        <changeSet id="insert-courses" author="yerkhan">
+            <insert tableName="t_course">
+                <column name="name" value="Java Developer"/>
+                <column name="description" value="Java 2026"/>
+                <column name="created_time" valueDate="2026-11-10 19:00:00"/>
+                <column name="update_time" valueDate="2026-11-10 19:00:00"/>
+            </insert>
+            <insert tableName="t_course">
+                <column name="name" value="GoLang Developer"/>
+                <column name="description" value="Go 2026"/>
+                <column name="created_time" valueDate="2026-11-09 19:00:00"/>
+                <column name="update_time" valueDate="2026-11-09 19:00:00"/>
+            </insert>
+            <insert tableName="t_course">
+                <column name="name" value="Python Developer"/>
+                <column name="description" value="Python 2026"/>
+                <column name="created_time" valueDate="2026-11-08 19:00:00"/>
+                <column name="update_time" valueDate="2026-11-08 19:00:00"/>
+            </insert>
+        </changeSet>
+</databaseChangeLog>
