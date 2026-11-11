@@ -12,7 +12,7 @@ public interface LessonMapper {
     @Mapping(source = "name", target = "lessonName")
     @Mapping(source = "content", target = "lessonContent")
     @Mapping(source = "order", target = "lessonOrder")
-    @Mapping(source = "chater.id",target = "chapterId")
+    @Mapping(source = "chapter.id",target = "chapterId")
     LessonDto toDto(Lesson lesson);
 
     @Mapping(source = "lessonName", target = "name")

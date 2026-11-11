@@ -11,12 +11,12 @@ import java.util.List;
 public interface ChapterMapper {
     @Mapping(source = "name", target = "chapterName")
     @Mapping(source = "order", target = "chapterOrder")
-    @Mapping(source = "chapter.id", target = "chapterId")
+    @Mapping(source = "course.id", target = "courseId")
     ChapterDto toDto(Chapter chapter);
 
     @Mapping(source = "chapterName", target = "name")
     @Mapping(source = "chapterOrder", target = "order")
-    @Mapping(source = "chapterId",target = "chapter.id")
+    @Mapping(source = "courseId",target = "course.id")
     Chapter toEntity(ChapterDto chapterDto);
 
     List<ChapterDto> toDtoList(List<Chapter> chapters);

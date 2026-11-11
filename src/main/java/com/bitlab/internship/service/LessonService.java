@@ -10,6 +10,7 @@ public interface LessonService {
     List<LessonDto> getAllLessons();
     LessonDto getByIdLesson(Long id);
     List<LessonDto> getLessonByChapterId(Long chapterId);
+    LessonDto updateLesson(Long id, LessonDto lessonDto);
     LessonDto createLesson(LessonDto lessonDto);
     boolean deleteLesson(Long id);
 }
