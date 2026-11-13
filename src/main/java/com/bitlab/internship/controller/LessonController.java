@@ -36,6 +36,13 @@ public class LessonController {
         LessonDto createLesson= lessonService.createLesson(lessonDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createLesson);
     }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<LessonDto> updateLesson(@PathVariable Long id,
+                                                  @RequestBody LessonDto lessonDto){
+        LessonDto updLesson= lessonService.updateLesson(id,lessonDto);
+        return ResponseEntity.ok(updLesson);
+    }
     @DeleteMapping("/{id}")
     public ResponseEntity<Boolean> deleteLesson(@PathVariable Long id){
         Boolean deleteLesson= lessonService.deleteLesson(id);

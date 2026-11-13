@@ -36,6 +36,13 @@ public class ChapterController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createChapter);
     }
 
+    @PutMapping("/update/{id}")
+    public ResponseEntity<ChapterDto> updateChapter(@PathVariable Long id,
+                                                    @RequestBody ChapterDto chapterDto){
+        ChapterDto updChapter= chapterService.updateChapter(id,chapterDto);
+        return ResponseEntity.ok(updChapter);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Boolean> deleteChapter(@PathVariable Long id){
         Boolean chapterDto= chapterService.deleteChapter(id);
