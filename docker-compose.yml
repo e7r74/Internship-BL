@@ -1,6 +1,7 @@
 services:
   back-service:
     build: .
+    image: joldassov/internship-back-service:latest
     container_name: internship-back-service
     depends_on:
       - postgres-db
