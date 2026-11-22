@@ -12,8 +12,10 @@ services:
       SPRING_DATASOURCE_PASSWORD: postgres
       SPRING_JPA_HIBERNATE_DDL_AUTO: validate
       SPRING_JPA_SHOW_SQL: "true"
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI: http://localhost:8081/realms/internship-realm
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK_SET_URI: http://keycloak:8080/realms/internship-realm/protocol/openid-connect/certs
     ports:
-      - "8000:8000"
+      - "8000:8080"
 
   postgres-db:
     image: postgres:15-alpine
@@ -53,8 +55,7 @@ services:
       KC_HTTP_ENABLED: "true"
       KC_HOSTNAME_STRICT: "false"
     ports:
-       - "8081:8080"
-
+      - "8081:8080"
 
 volumes:
   pgdata:
