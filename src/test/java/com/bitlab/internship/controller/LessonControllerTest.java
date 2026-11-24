@@ -7,8 +7,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.security.oauth2.server.resource.autoconfigure.web.OAuth2ResourceServerWebSecurityAutoConfiguration;
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -19,11 +22,18 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(LessonController.class)
+//@WebMvcTest(LessonController.class)
+@WebMvcTest(
+        controllers = LessonController.class,
+        excludeAutoConfiguration = OAuth2ResourceServerWebSecurityAutoConfiguration.class
+)
+@AutoConfigureMockMvc(addFilters = false)
 class LessonControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
+    @MockitoBean
+    private JwtDecoder jwtDecoder;
 
     @MockitoBean
     private LessonService lessonService;
@@ -47,7 +57,7 @@ class LessonControllerTest {
     void getAllLessonsTest() throws Exception {
         Mockito.when(lessonService.getAllLessons()).thenReturn(List.of(lessonDto));
 
-        mockMvc.perform(get("/lessons"))
+        mockMvc.perform(get("/api/lessons"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.size()").value(1))
                 .andExpect(jsonPath("$[0].id").value(1L))
@@ -62,7 +72,7 @@ class LessonControllerTest {
     void getByIdLessonTest() throws Exception {
         Mockito.when(lessonService.getByIdLesson(1L)).thenReturn(lessonDto);
 
-        mockMvc.perform(get("/lessons/1"))
+        mockMvc.perform(get("/api/lessons/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1L))
                 .andExpect(jsonPath("$.lessonName").value("Lecture for if-else conditions"))
@@ -75,7 +85,7 @@ class LessonControllerTest {
     void getLessonsByChapterIdTest() throws Exception {
         Mockito.when(lessonService.getLessonByChapterId(1L)).thenReturn(List.of(lessonDto));
 
-        mockMvc.perform(get("/lessons/chapter/1"))
+        mockMvc.perform(get("/api/lessons/chapter/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.size()").value(1))
                 .andExpect(jsonPath("$[0].chapterId").value(1L))
@@ -88,7 +98,7 @@ class LessonControllerTest {
     void createLessonTest() throws Exception {
         Mockito.when(lessonService.createLesson(any(LessonDto.class))).thenReturn(lessonDto);
 
-        mockMvc.perform(post("/lessons/create")
+        mockMvc.perform(post("/api/lessons/create")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(lessonDto)))
                 .andExpect(status().isCreated())
@@ -111,7 +121,7 @@ class LessonControllerTest {
 
         Mockito.when(lessonService.updateLesson(eq(1L), any(LessonDto.class))).thenReturn(updatedDto);
 
-        mockMvc.perform(put("/lessons/update/1")
+        mockMvc.perform(put("/api/lessons/update/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(updatedDto)))
                 .andExpect(status().isOk())
@@ -126,7 +136,7 @@ class LessonControllerTest {
     void deleteLessonTest() throws Exception {
         Mockito.when(lessonService.deleteLesson(1L)).thenReturn(true);
 
-        mockMvc.perform(delete("/lessons/1"))
+        mockMvc.perform(delete("/api/lessons/1"))
                 .andExpect(status().isOk())
                 .andExpect(content().string("true"));
 

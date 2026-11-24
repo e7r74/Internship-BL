@@ -52,20 +52,17 @@ public class LessonServiceImpl implements LessonService {
     @Override
     public LessonDto updateLesson(Long id, LessonDto lessonDto) {
         log.info("Update lesson with id: {}",id);
-        Chapter chapter=null;
+        Lesson updLesson= checkLesson(id);
         if (lessonDto.getChapterId()!=null){
-            chapter= chapterRepository.findById(lessonDto.getChapterId())
+           Chapter chapter= chapterRepository.findById(lessonDto.getChapterId())
                                         .orElseThrow(() ->{
                                             log.error("Cannot update chapter: Chapter not found with id: {}",lessonDto.getChapterId());
                                             return new IllegalArgumentException("Cannot update lesson: Chapter not found with id: " + lessonDto.getChapterId());
                                         });
+           updLesson.setChapter(chapter);
         }
-        Lesson updLesson=checkLesson(id);
-        updLesson.setName(lessonDto.getLessonName());
-        updLesson.setDescription(lessonDto.getDescription());
-        updLesson.setContent(lessonDto.getLessonContent());
-        updLesson.setOrder(lessonDto.getLessonOrder());
-        updLesson.setChapter(chapter);
+        lessonMapper.updateEntityFromDto(lessonDto, updLesson);
+
         log.debug("Updated lesson object: {}", updLesson);
         return lessonMapper.toDto(lessonRepository.save(updLesson));
     }

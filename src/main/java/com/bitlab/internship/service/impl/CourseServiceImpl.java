@@ -46,8 +46,7 @@ public class CourseServiceImpl implements CourseService {
     public CourseDto updateCourse(Long id, CourseDto courseDto) {
         log.info("Update course with id: {}",id);
         Course updCourse=checkCourse(id);
-        updCourse.setName(courseDto.getCourseName());
-        updCourse.setDescription(courseDto.getDescription());
+        courseMapper.updateEntityFromDto(courseDto,updCourse);
         log.debug("Updating course object: {}",updCourse);
         return courseMapper.toDto(courseRepository.save(updCourse));
     }

@@ -52,19 +52,16 @@ public class ChapterServiceImpl implements ChapterService {
     @Override
     public ChapterDto updateChapter(Long id, ChapterDto chapterDto) {
         log.info("Update chapter with id: {}",id);
-        Course course=null;
+        Chapter updChapter=checkChapter(id);
         if (chapterDto.getCourseId()!=null){
-            course= courseRepository.findById(chapterDto.getCourseId())
+           Course course= courseRepository.findById(chapterDto.getCourseId())
                                     .orElseThrow(()->{
                                         log.error("Cannot update chapter: Course not found with id: {}",chapterDto.getCourseId());
                                       return new IllegalArgumentException("Cannot update chapter: Course not found with id: "+chapterDto.getCourseId());
                                     });
+           updChapter.setCourse(course);
         }
-        Chapter updChapter=checkChapter(id);
-        updChapter.setName(chapterDto.getChapterName());
-        updChapter.setDescription(chapterDto.getDescription());
-        updChapter.setOrder(chapterDto.getChapterOrder());
-        updChapter.setCourse(course);
+        chapterMapper.updateEntityFromDto(chapterDto, updChapter);
         log.debug("Updating chapter object: {}",updChapter);
         return chapterMapper.toDto(chapterRepository.save(updChapter));
     }
