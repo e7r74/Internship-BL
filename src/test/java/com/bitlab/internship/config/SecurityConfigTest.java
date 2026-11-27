@@ -1,8 +1,9 @@
-package com.bitlab.internship.controller;
+package com.bitlab.internship.config;
 
-import com.bitlab.internship.config.SecurityConfig;
-import com.bitlab.internship.dto.LoginRequestDto;
-import com.bitlab.internship.dto.TokenResponseDto;
+import com.bitlab.internship.controller.AuthUserController;
+import com.bitlab.internship.dto.auth.LoginRequestDto;
+import com.bitlab.internship.dto.auth.RefreshTokenRequestDto;
+import com.bitlab.internship.dto.auth.TokenResponseDto;
 import com.bitlab.internship.service.AuthService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -83,5 +84,18 @@ class SecurityConfigTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.username").value("admin_user"))
                 .andExpect(jsonPath("$.authorities[0]").value("ROLE_ADMIN"));
+    }
+    @Test
+    void refreshEndpoint_WithoutToken_IsPermitted() throws Exception {
+        RefreshTokenRequestDto request = new RefreshTokenRequestDto("valid-refresh-token");
+
+        when(authService.refreshToken(any())).thenReturn(TokenResponseDto.builder()
+                .accessToken("new-jwt-token")
+                .build());
+
+        mockMvc.perform(post("/api/auth/refresh")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isOk());
     }
 }

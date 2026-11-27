@@ -1,6 +1,6 @@
 package com.bitlab.internship.mapper;
 
-import com.bitlab.internship.dto.TokenResponseDto;
+import com.bitlab.internship.dto.auth.TokenResponseDto;
 import com.bitlab.internship.mappers.AuthMapper;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;

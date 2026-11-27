@@ -1,4 +1,4 @@
-package com.bitlab.internship.dto;
+package com.bitlab.internship.dto.auth;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;

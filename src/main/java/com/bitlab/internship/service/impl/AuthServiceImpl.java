@@ -1,7 +1,8 @@
 package com.bitlab.internship.service.impl;
 
-import com.bitlab.internship.dto.LoginRequestDto;
-import com.bitlab.internship.dto.TokenResponseDto;
+import com.bitlab.internship.dto.auth.LoginRequestDto;
+import com.bitlab.internship.dto.auth.RefreshTokenRequestDto;
+import com.bitlab.internship.dto.auth.TokenResponseDto;
 import com.bitlab.internship.mappers.AuthMapper;
 import com.bitlab.internship.service.AuthService;
 import lombok.RequiredArgsConstructor;
@@ -61,5 +62,31 @@ public class AuthServiceImpl implements AuthService {
             log.error("Authentication failed for user: {}. Reason: {}", request.getUsername(), ex.getMessage());
             throw new BadCredentialsException("Invalid username or password");
         }
+    }
+
+    @Override
+    public TokenResponseDto refreshToken(RefreshTokenRequestDto requestDto) {
+       log.info("Refreshing access token using refresh token");
+
+       MultiValueMap<String, String> formData=new LinkedMultiValueMap<>();
+       formData.add("grant_type", "refresh_token");
+       formData.add("client_id", clientId);
+       formData.add("client_secret", clientSecret);
+       formData.add("refresh_token", requestDto.getRefreshToken());
+
+       try {
+           log.debug("Sending refresh token request to Keycloak URI: {}", tokenUri);
+            Map<String, Object> response= restClient.post()
+                    .uri(tokenUri)
+                    .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                    .body(formData)
+                    .retrieve()
+                    .body(new ParameterizedTypeReference<>() {});
+            log.info("access token refreshed successfully");
+            return authMapper.toTokenResponse(response);
+       }catch (HttpClientErrorException.Unauthorized | HttpClientErrorException.BadRequest ex){
+           log.error("Token refresh failed. Reason: {}", ex.getMessage());
+            throw new BadCredentialsException("Invalid or expired refresh token");
+       }
     }
 }

@@ -1,7 +1,8 @@
 package com.bitlab.internship.controller;
 
-import com.bitlab.internship.dto.LoginRequestDto;
-import com.bitlab.internship.dto.TokenResponseDto;
+import com.bitlab.internship.dto.auth.LoginRequestDto;
+import com.bitlab.internship.dto.auth.RefreshTokenRequestDto;
+import com.bitlab.internship.dto.auth.TokenResponseDto;
 import com.bitlab.internship.service.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -38,5 +39,12 @@ public class AuthUserController {
     public ResponseEntity<TokenResponseDto> login(@Valid @RequestBody LoginRequestDto requestDto){
        TokenResponseDto tokenResponseDto= authService.login(requestDto);
        return ResponseEntity.ok(tokenResponseDto);
+    }
+
+    @PostMapping("/refresh")
+    @Operation(summary = "Refresh JWT token", description = "Issues a new JWT access token and refresh token using a valid refresh token")
+    public ResponseEntity<TokenResponseDto> refreshToken (@Valid @RequestBody RefreshTokenRequestDto requestDto){
+        TokenResponseDto tokenResponseDto= authService.refreshToken(requestDto);
+        return ResponseEntity.ok(tokenResponseDto);
     }
 }

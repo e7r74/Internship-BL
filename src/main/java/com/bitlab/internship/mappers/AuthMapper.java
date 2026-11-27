@@ -1,6 +1,6 @@
 package com.bitlab.internship.mappers;
 
-import com.bitlab.internship.dto.TokenResponseDto;
+import com.bitlab.internship.dto.auth.TokenResponseDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

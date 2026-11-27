@@ -1,4 +1,4 @@
-package com.bitlab.internship.dto;
+package com.bitlab.internship.dto.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

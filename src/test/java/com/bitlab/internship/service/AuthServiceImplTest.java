@@ -1,7 +1,8 @@
 package com.bitlab.internship.service;
 
-import com.bitlab.internship.dto.LoginRequestDto;
-import com.bitlab.internship.dto.TokenResponseDto;
+import com.bitlab.internship.dto.auth.LoginRequestDto;
+import com.bitlab.internship.dto.auth.RefreshTokenRequestDto;
+import com.bitlab.internship.dto.auth.TokenResponseDto;
 import com.bitlab.internship.mappers.AuthMapper;
 import com.bitlab.internship.service.impl.AuthServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -88,6 +89,49 @@ class AuthServiceImplTest {
         );
 
         assertEquals("Invalid username or password", exception.getMessage());
+        mockServer.verify();
+    }
+
+    @Test
+    void refreshToken_Success_ReturnsNewTokens() {
+        RefreshTokenRequestDto request = new RefreshTokenRequestDto("valid-refresh-token");
+
+        String keycloakJsonResponse = """
+                {
+                  "access_token": "new-mock-jwt-access-token",
+                  "refresh_token": "new-mock-refresh-token",
+                  "expires_in": 300,
+                  "refresh_expires_in": 36000,
+                  "token_type": "Bearer"
+                }
+                """;
+
+        mockServer.expect(requestTo(tokenUri))
+                .andExpect(method(HttpMethod.POST))
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_FORM_URLENCODED))
+                .andRespond(withSuccess(keycloakJsonResponse, MediaType.APPLICATION_JSON));
+
+        TokenResponseDto response = authService.refreshToken(request);
+
+        assertNotNull(response);
+        assertEquals("new-mock-jwt-access-token", response.getAccessToken());
+        assertEquals("new-mock-refresh-token", response.getRefreshToken());
+        assertEquals(300L, response.getExpiresIn());
+        mockServer.verify();
+    }
+    @Test
+    void refreshToken_InvalidOrExpiredToken_ThrowsBadCredentialsException() {
+        RefreshTokenRequestDto requestDto= new RefreshTokenRequestDto();
+
+        mockServer.expect(requestTo(tokenUri))
+                .andExpect(method(HttpMethod.POST))
+                .andRespond(withStatus(HttpStatus.BAD_REQUEST));
+        BadCredentialsException exception=assertThrows(
+                BadCredentialsException.class,
+                ()-> authService.refreshToken(requestDto)
+        );
+
+        assertEquals("Invalid or expired refresh token", exception.getMessage());
         mockServer.verify();
     }
 }
